@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
+* {
+  color: rgb(75, 73, 73);
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   display: flex;
@@ -11,4 +15,34 @@ body {
 
 h1 {
   text-align: center;
+}
+
+.container {
+  position: relative;
+  /* Add any other styling you need for the container */
+}
+
+.button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Add any other styling you need for the button */
+}
+
+td {
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+  width: 100px;
+  height: 100px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  text-align: center;
+  height: 50px;
+  vertical-align: bottom;
 }
