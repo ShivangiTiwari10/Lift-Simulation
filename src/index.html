@@ -8,18 +8,18 @@
     <title>RDs Lift Simulation</title>
   </head>
   <body>
-    <div class="container"></div>
+    <div id="form" class="container">
+      <form>
+        <h1>Lift Simulation</h1>
+        <label for="liftNumber">Enter number of lifts</label><br />
+        <input type="number" id="liftnumber" name="lifts" /><br /><br />
 
-    <form>
-      <h1>Lift Simulation</h1>
-      <label for="liftNumbers">Enter number of lifts</label><br />
-      <input type="number" id="liftnumber" /><br /><br />
+        <label for="floorNumber">Enter number of floors</label><br />
+        <input type="number" id="floornumber" name="floors" /><br /><br />
+        <input type="submit" value="submit" />
+      </form>
+    </div>
 
-      <label for="floorNumbers">Enter number of floors</label><br />
-      <input type="number" id="floornumber" /><br /><br />
-
-      <button class="submitButton">submit</button>
-    </form>
     <script src="main.js"></script>
   </body>
 </html>

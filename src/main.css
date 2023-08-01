@@ -19,30 +19,25 @@ h1 {
 
 .container {
   position: relative;
-  /* Add any other styling you need for the container */
 }
 
-.button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* Add any other styling you need for the button */
+input[type="submit"]:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }
 
-td {
-  border-bottom: 1px solid #ccc;
-  padding: 15px;
-  width: 100px;
-  height: 100px;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td {
+#backBtnDiv {
   text-align: center;
-  height: 50px;
-  vertical-align: bottom;
+  display: none;
+}
+
+#backBtn {
+  border-radius: 5px;
+  width: fit-content;
+  padding: 3px;
+  margin: 0 auto;
+}
+#backBtn:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }
