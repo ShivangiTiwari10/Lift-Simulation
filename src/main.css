@@ -18,26 +18,7 @@ h1 {
 }
 
 .container {
-  position: relative;
-}
-
-input[type="submit"]:hover {
-  cursor: pointer;
-  transform: scale(1.1);
-}
-
-#backBtnDiv {
-  text-align: center;
-  display: none;
-}
-
-#backBtn {
-  border-radius: 5px;
-  width: fit-content;
-  padding: 3px;
-  margin: 0 auto;
-}
-#backBtn:hover {
-  cursor: pointer;
-  transform: scale(1.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
