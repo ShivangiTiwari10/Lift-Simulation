@@ -1,48 +1,49 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const submitButton = document.querySelector(".submitButton");
+const form = document.querySelector("#form");
+const simulation = document.querySelector("#simulation");
+const submitButton = form.querySelector(".submitButton");
 
-  const formContainer = document.getElementById("form");
+submitButton.addEventListener("click", function (event) {
+  event.preventDefault();
 
-  const liftSimulationContainer = document.querySelector(".floor-wrapper");
-  //   const buttonContainer = document.querySelector(".button-container");
-  const floorContainer = document.getElementById("floorContainer");
+  const numLifts = parseInt(document.querySelector("#liftnumber").value);
+  const numFloors = parseInt(document.querySelector("#floornumber").value);
 
-  submitButton.addEventListener("click", function (event) {
-    event.preventDefault();
-
-    const numLifts = document.getElementById("liftnumber").value;
-    const numFloors = document.getElementById("floornumber").value;
-
-    if (numLifts.trim() === "" || numFloors.trim() === "") {
-      alert("Please fill in both input boxes.");
-    } else if (numLifts < 0 || numFloors < 0) {
-      alert("Enter positive numbers");
-      return false;
-    } else if (numLifts > numFloors) {
-      alert("no. of lift can not be more than no. of floors");
-      return;
-    }
-
-    // Hide the input form
-    formContainer.style.display = "none";
-
-    // Show the lift simulation UI
-
-    liftSimulationContainer.style.display = "block";
-    // buttonContainer.style.display = "flex";
-
-    floorContainer.innerHTML = "";
-
-    for (let i = 1; i <= numFloors; i++) {
-      const floorElement = document.createElement("div");
-      floorElement.className = "floor";
-
-      floorElement.innerHTML = `
-      <button class="floor-button up-button">↑</button>
-      <span class="floor-number">Floor ${i}</span>
-      <button class="floor-button down-button">↓</button>
-    `;
-      floorContainer.appendChild(floorElement);
-    }
-  });
+  if (!isNaN(numLifts) && !isNaN(numFloors)) {
+    generateSimulationUI(numFloors, numLifts);
+    form.style.display = "none";
+    simulation.style.display = "block";
+    console.log(`Lifts: ${numLifts}, Floors: ${numFloors}`);
+  } else {
+    alert("Please enter valid numbers for lifts and floors.");
+  }
 });
+
+function generateSimulationUI(numFloors, numLifts) {
+  const simulationContainer = document.createElement("div");
+  simulationContainer.classList.add("simulation-container");
+
+  for (let floor = numFloors; floor >= 1; floor--) {
+    const floorContainer = document.createElement("div");
+    floorContainer.classList.add("floor-container");
+
+    const floorNumber = document.createElement("span");
+    floorNumber.classList.add("floor-number");
+    floorNumber.textContent = `Floor ${floor}`;
+
+    const upButton = document.createElement("button");
+    upButton.classList.add("floor-button");
+    upButton.textContent = "▲";
+
+    const downButton = document.createElement("button");
+    downButton.classList.add("floor-button");
+    downButton.textContent = "▼";
+
+    floorContainer.appendChild(floorNumber);
+    floorContainer.appendChild(upButton);
+    floorContainer.appendChild(downButton);
+
+    simulationContainer.appendChild(floorContainer);
+  }
+
+  simulation.appendChild(simulationContainer);
+}

@@ -22,3 +22,50 @@ h1 {
   align-items: center;
   justify-content: space-between;
 }
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.simulation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap; /* Allow items to wrap to the next row */
+}
+
+.floor-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  height: 10vh; /* Height set to 20% of viewport height */
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.floor-number {
+  font-size: 10px;
+  font-weight: bolder;
+}
+
+.floor-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 5px;
+}
+
+.floor-button:hover {
+  background-color: #2980b9;
+}
