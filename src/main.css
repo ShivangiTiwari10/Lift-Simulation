@@ -17,75 +17,95 @@ h1 {
   text-align: center;
 }
 
-.container {
+.form {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.container {
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.simulation-container {
+.submitButton {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  width: 120%;
-  height: 80vh;
-  margin-top: 10px;
-  overflow-y: auto;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  padding: 10px;
-}
-
-.floor-container {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  width: 100%;
-  height: 10vh;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-.lift-box {
-  display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
-.lift-number {
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 5px;
+.floor {
+  background-color: rgb(206, 151, 111);
+  max-width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  border: 2px solid #4e1b1b;
+  box-sizing: border-box;
+  position: relative;
+  flex-wrap: nowrap;
 }
 
-.floor-number {
-  font-size: 10px;
-  font-weight: bolder;
+.lift {
+  width: 60px;
+  display: flex;
+  color: FFFFFF;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
 }
 
-.floor-button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 5px;
+.liftLeftDoor,
+.liftRightDoor {
+  background-color: #778899;
+  width: 30px;
+  height: 96px;
+  position: absolute;
+  top: 0;
+  transition: width 2.5s linear;
 }
 
-.floor-button:hover {
-  background-color: #2980b9;
+.liftLeftDoor {
+  border-right: 3px solid black;
+  /* left: 0; */
+}
+
+.liftRightDoor {
+  border-left: 3px solid black;
+  right: 0;
+}
+
+#simulation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 15px;
+  align-items: center;
+}
+
+.floors-border {
+  margin-top: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: 1px solid #0aa34a;
+}
+
+.floorDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px;
+  min-width: 50px;
+}
+
+.floorButtons {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+  justify-content: center;
+  justify-items: center;
+}
+.lifts-container {
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  max-width: 100px;
+  margin: 0 auto;
+  padding: 4px;
 }

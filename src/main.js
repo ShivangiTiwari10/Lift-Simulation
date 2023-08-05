@@ -10,84 +10,87 @@ submitButton.addEventListener("click", function (event) {
 
   if (validateInput(numFloors, numLifts)) {
     generateSimulationUI(numFloors, numLifts);
-    form.style.display = "none";
-    simulation.style.display = "block";
-    console.log(`Lifts: ${numLifts}, Floors: ${numFloors}`);
   }
 });
 
-function validateInput(floorCount, liftCount) {
-  if (isNaN(floorCount) || isNaN(liftCount)) {
+function validateInput(numFloors, numLifts) {
+  if (isNaN(numFloors) || isNaN(numLifts)) {
     alert("Enter a valid number");
     return false;
-  } else if (floorCount < 0 || liftCount < 0) {
-    alert("Enter positive numbers");
+  } else if (numFloors < 0 || numLifts < 0) {
+    alert("Enter positive number");
     return false;
-  } else if (liftCount > floorCount) {
-    alert("No. of Lifts cannot be more than No. of floors");
+  } else if (numLifts > numFloors) {
+    alert("Lifts should not be more then floors");
     return false;
-  } else if (liftCount === 0 || floorCount === 0) {
-    alert("No. of Lifts or No. of floors cannot be zero");
+  } else if (numLifts == 0 || numFloors == 0) {
+    alert("No. of Lifts and floors cannot be zero");
     return false;
   }
   return true;
 }
 
 function generateSimulationUI(numFloors, numLifts) {
-  const simulationContainer = document.createElement("div");
-  simulationContainer.classList.add("simulation-container");
+  const groundFloor = document.getElementById("simulation");
+  groundFloor.innerHTML = "";
 
-  for (let floor = numFloors; floor >= 1; floor--) {
-    const floorContainer = document.createElement("div");
-    floorContainer.classList.add("floor-container");
-
-    const floorNumber = document.createElement("span");
-    floorNumber.classList.add("floor-number");
-    floorNumber.textContent = `Floor ${floor}`;
-
-    const upButton = document.createElement("button");
-    upButton.classList.add("floor-button");
-    upButton.textContent = "▲";
-
-    upButton.addEventListener("click", function () {
-      // Move the lifts to the selected floor
-      moveLiftToFloor(floor, "up");
-    });
-
-    const downButton = document.createElement("button");
-    downButton.classList.add("floor-button");
-    downButton.textContent = "▼";
-
-    downButton.addEventListener("click", function () {
-      // Move the lifts to the selected floor
-      moveLiftToFloor(floor, "down");
-    });
-
-    floorContainer.appendChild(floorNumber);
-    floorContainer.appendChild(upButton);
-    floorContainer.appendChild(downButton);
-
-    simulationContainer.appendChild(floorContainer);
-  }
-
-  // Create lift containers at the bottom for each lift
-  const liftContainer = document.createElement("div");
-  liftContainer.classList.add("lift-container");
-
-  for (let liftNumber = 1; liftNumber <= numLifts; liftNumber++) {
-    const liftBox = document.createElement("div");
-    liftBox.classList.add("lift-box");
-    liftBox.style.backgroundColor = "blue";
-    liftBox.textContent = `Lift ${liftNumber}`;
-    liftContainer.appendChild(liftBox);
-  }
-
-  simulationContainer.appendChild(liftContainer);
-  simulation.appendChild(simulationContainer);
-
-  function moveLiftToFloor(floor, direction) {
-    // Move each lift to the selected floor based on direction
-    const liftPosition = (floor - 1) * 10;
-    liftContainer.style.transform = `translateY(-${liftPosition}vh)`;
+  const validation = validateInput(numFloors, numLifts);
+  if (validation) {
+    document.getElementById("form").setAttribute("hidden", "hidden");
+    document.getElementById("simulation").removeAttribute("hidden");
+    createFloor(numFloors, numLifts);
   }
 }
+
+const createFloor = (numFloors, numLifts) => {
+  const floors = document.getElementById("simulation");
+  for (id = 1; id <= numFloors; id++) {
+    let floorIdx = floors.childElementCount;
+    let currentFloor = floorIdx + 1;
+
+    const floor = creatFloorBox(currentFloor);
+    floors.insertBefore(floor, floors.firstChild);
+    if (floorIdx === 0) {
+      floors.setAttribute("class", "floors-border");
+    }
+  }
+};
+
+const creatFloorBox = (id) => {
+  const floor = document.createElement("div");
+  floor.setAttribute("class", "floor");
+  floor.setAttribute("id", id);
+
+  const floorDetails = document.createElement("div");
+  floorDetails.setAttribute("class", "floorDetails");
+
+  const liftsContainer = document.createElement("div");
+  liftsContainer.setAttribute("class", "lifts-container");
+  liftsContainer.setAttribute("id", "lifts-container-" + id);
+
+  const floorName = document.createElement("div");
+  floorName.innerHTML = "Floor " + id;
+
+  const floorButtons = document.createElement("div");
+  floorButtons.setAttribute("class", "floorButtons");
+
+  const upButton = document.createElement("input");
+  upButton.setAttribute("type", "button");
+  upButton.setAttribute("value", "▲");
+  upButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
+  const downButton = document.createElement("input");
+  downButton.setAttribute("type", "button");
+  downButton.setAttribute("value", "▼");
+  downButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
+
+  floorButtons.appendChild(upButton);
+  floorButtons.appendChild(downButton);
+
+  floorDetails.appendChild(floorName);
+  floorDetails.appendChild(floorButtons);
+
+  floor.appendChild(floorDetails);
+  floor.appendChild(liftsContainer);
+
+  return floor;
+};
