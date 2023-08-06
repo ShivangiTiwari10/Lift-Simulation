@@ -31,7 +31,7 @@ h1 {
 }
 
 .floor {
-  background-color: rgb(206, 151, 111);
+  background-color: rgb(185, 180, 180);
   width: 1000px;
   height: 100px;
   display: flex;
