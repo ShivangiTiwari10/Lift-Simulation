@@ -11,6 +11,7 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  width: 100%;
 }
 
 h1 {
@@ -31,7 +32,7 @@ h1 {
 
 .floor {
   background-color: rgb(206, 151, 111);
-  max-width: 100%;
+  width: 1000px;
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -40,49 +41,51 @@ h1 {
   position: relative;
   flex-wrap: nowrap;
 }
+.lifts-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  padding: 4px;
+}
 
 .lift {
   width: 60px;
   display: flex;
   color: FFFFFF;
-  background-color: #ffffff;
+  background-color: #b6d867;
   position: relative;
   overflow: hidden;
 }
 
 .liftLeftDoor,
 .liftRightDoor {
-  background-color: #778899;
+  background-color: #c1e66d;
   width: 30px;
   height: 96px;
   position: absolute;
   top: 0;
-  transition: width 2.5s linear;
 }
 
 .liftLeftDoor {
-  border-right: 3px solid black;
+  border-right: 3px solid rgb(43, 42, 42);
   /* left: 0; */
-}
-
-.liftRightDoor {
-  border-left: 3px solid black;
-  right: 0;
 }
 
 #simulation {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  row-gap: 15px;
+  row-gap: 12px;
   align-items: center;
 }
 
 .floors-border {
-  margin-top: 16px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  border: 1px solid #0aa34a;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px #0aa34a;
 }
 
 .floorDetails {
@@ -99,13 +102,4 @@ h1 {
   row-gap: 2px;
   justify-content: center;
   justify-items: center;
-}
-.lifts-container {
-  display: flex;
-  justify-content: space-around;
-  box-sizing: border-box;
-  flex-wrap: nowrap;
-  max-width: 100px;
-  margin: 0 auto;
-  padding: 4px;
 }

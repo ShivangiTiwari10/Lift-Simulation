@@ -26,6 +26,9 @@ function validateInput(numFloors, numLifts) {
   } else if (numLifts == 0 || numFloors == 0) {
     alert("No. of Lifts and floors cannot be zero");
     return false;
+  } else if (numFloors > 10) {
+    alert("floor should be maximum 10");
+    return false;
   }
   return true;
 }
@@ -50,7 +53,12 @@ const createFloor = (numFloors, numLifts) => {
 
     const floor = creatFloorBox(currentFloor);
     floors.insertBefore(floor, floors.firstChild);
-    if (floorIdx === 0) {
+
+    if (currentFloor === 1) {
+      for (let liftId = 1; liftId <= numLifts; liftId++) {
+        const lift = createLiftBox(liftId);
+        floor.querySelector(".lifts-container").appendChild(lift);
+      }
       floors.setAttribute("class", "floors-border");
     }
   }
@@ -59,7 +67,6 @@ const createFloor = (numFloors, numLifts) => {
 const creatFloorBox = (id) => {
   const floor = document.createElement("div");
   floor.setAttribute("class", "floor");
-  floor.setAttribute("id", id);
 
   const floorDetails = document.createElement("div");
   floorDetails.setAttribute("class", "floorDetails");
@@ -77,11 +84,10 @@ const creatFloorBox = (id) => {
   const upButton = document.createElement("input");
   upButton.setAttribute("type", "button");
   upButton.setAttribute("value", "▲");
-  upButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
+
   const downButton = document.createElement("input");
   downButton.setAttribute("type", "button");
   downButton.setAttribute("value", "▼");
-  downButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
 
   floorButtons.appendChild(upButton);
   floorButtons.appendChild(downButton);
@@ -93,4 +99,21 @@ const creatFloorBox = (id) => {
   floor.appendChild(liftsContainer);
 
   return floor;
+};
+
+const createLiftBox = (liftId) => {
+  const lift = document.createElement("div");
+  lift.setAttribute("class", "lift");
+  lift.setAttribute("id", "lift-" + liftId);
+
+  const leftDoor = document.createElement("div");
+  leftDoor.setAttribute("class", "liftLeftDoor");
+
+  const rightDoor = document.createElement("div");
+  rightDoor.setAttribute("class", "liftRightDoor");
+
+  lift.appendChild(leftDoor);
+  lift.appendChild(rightDoor);
+
+  return lift;
 };
