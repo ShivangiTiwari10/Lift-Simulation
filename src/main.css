@@ -53,10 +53,10 @@ h1 {
 .lift {
   width: 60px;
   display: flex;
+  overflow: hidden;
   color: FFFFFF;
   background-color: #b6d867;
   position: relative;
-  overflow: hidden;
 }
 
 .liftLeftDoor,

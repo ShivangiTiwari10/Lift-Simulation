@@ -10,8 +10,12 @@ submitButton.addEventListener("click", function (event) {
 
   if (validateInput(numFloors, numLifts)) {
     generateSimulationUI(numFloors, numLifts);
+    document.getElementById("backButton").removeAttribute("hidden");
   }
 });
+
+let liftData = [];
+let requestQueue = [];
 
 function validateInput(numFloors, numLifts) {
   if (isNaN(numFloors) || isNaN(numLifts)) {
@@ -89,14 +93,14 @@ const creatFloorBox = (id) => {
   downButton.setAttribute("type", "button");
   downButton.setAttribute("value", "▼");
 
-  floorButtons.appendChild(upButton);
-  floorButtons.appendChild(downButton);
+  floorButtons.append(upButton);
+  floorButtons.append(downButton);
 
-  floorDetails.appendChild(floorName);
-  floorDetails.appendChild(floorButtons);
+  floorDetails.append(floorName);
+  floorDetails.append(floorButtons);
 
-  floor.appendChild(floorDetails);
-  floor.appendChild(liftsContainer);
+  floor.append(floorDetails);
+  floor.append(liftsContainer);
 
   return floor;
 };
@@ -116,4 +120,14 @@ const createLiftBox = (liftId) => {
   lift.appendChild(rightDoor);
 
   return lift;
+};
+
+window.backButtonClick = () => {
+  const floors = document.getElementById("simulation");
+  floors.removeAttribute("class");
+  floors.innerHTML = "";
+  liftData = [];
+  requestQueue = [];
+  document.getElementById("backButton").setAttribute("hidden", "hidden");
+  document.getElementById("form").removeAttribute("hidden");
 };
