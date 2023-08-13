@@ -130,13 +130,6 @@ const createLiftBox = (liftId) => {
   return lift;
 };
 
-// const openLift = (lift, time) => {
-//   setTimeout(() => {
-//     lift.children[0].style.width = "0px";
-//     lift.children[1].style.width = "0px";
-//   }, time / 2);
-// };
-
 window.backButtonClick = () => {
   const floors = document.getElementById("simulation");
   floors.removeAttribute("class");
