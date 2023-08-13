@@ -1,3 +1,6 @@
+let liftData = [];
+let requestQueue = [];
+
 const form = document.querySelector("#form");
 const simulation = document.querySelector("#simulation");
 const submitButton = form.querySelector(".submitButton");
@@ -13,9 +16,6 @@ submitButton.addEventListener("click", function (event) {
     document.getElementById("backButton").removeAttribute("hidden");
   }
 });
-
-let liftData = [];
-let requestQueue = [];
 
 function validateInput(numFloors, numLifts) {
   if (isNaN(numFloors) || isNaN(numLifts)) {
@@ -88,10 +88,18 @@ const creatFloorBox = (id) => {
   const upButton = document.createElement("input");
   upButton.setAttribute("type", "button");
   upButton.setAttribute("value", "▲");
+  upButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
+  console.log("upButton clicked");
+
+  console.log(upButton.moveButtonClick);
+  console.log(upButton);
 
   const downButton = document.createElement("input");
   downButton.setAttribute("type", "button");
   downButton.setAttribute("value", "▼");
+  downButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
+  console.log(downButton.moveButtonClick);
+  console.log("downButton clicked");
 
   floorButtons.append(upButton);
   floorButtons.append(downButton);
@@ -122,12 +130,80 @@ const createLiftBox = (liftId) => {
   return lift;
 };
 
+// const openLift = (lift, time) => {
+//   setTimeout(() => {
+//     lift.children[0].style.width = "0px";
+//     lift.children[1].style.width = "0px";
+//   }, time / 2);
+// };
+
 window.backButtonClick = () => {
   const floors = document.getElementById("simulation");
   floors.removeAttribute("class");
   floors.innerHTML = "";
-  liftData = [];
-  requestQueue = [];
   document.getElementById("backButton").setAttribute("hidden", "hidden");
   document.getElementById("form").removeAttribute("hidden");
+};
+
+const moveButtonClick = (floorNumber) => {
+  console.log("Btn clicked for floor:", floorNumber);
+
+  const liftId = calculateLiftMovement(floorNumber);
+  console.log("Selected liftId:", liftId);
+
+  console.log("liftData:", liftData);
+
+  const lift = document.getElementById(liftId);
+  if (!lift) {
+    requestQueue.push(floorNumber);
+    console.log("Lift not found, added to requestQueue:", requestQueue);
+    return;
+  }
+  liftData.forEach((l) => {
+    if (l.id == liftId) {
+      l.inTransition = true;
+    }
+  });
+  console.log("Moving lift to floor:", floorNumber);
+  movelift(lift, floorNumber);
+};
+
+const movelift = (lift, floorNumber) => {
+  let time = 0;
+  let diff = 0;
+  liftData.forEach((l) => {
+    if (l.id == lift.id) {
+      diff = Math.abs(l.floor - floorNumber);
+      time = diff * 2000;
+    }
+
+    console.log("move lifts from floor", l.floor, "to", floorNumber);
+    console.log("Time:", time);
+    console.log("move lifts ", floorNumber);
+  });
+
+  lift.style.transition = "transform " + time + "ms linear";
+  lift.style.transform = "translateY(-" + (floorNumber - 1) * 116 + "px)";
+  openLift(lift, time);
+  closeLift(lift, floorNumber, time);
+};
+
+const calculateLiftMovement = (floorNumber) => {
+  liftId = findClosestLift(floorNumber);
+  return "lift-" + liftId;
+};
+
+const findClosestLift = (floorNumber) => {
+  let diff = Infinity;
+  let closestLift;
+  liftData.forEach((l) => {
+    let subtract = floorNumber - l.floor;
+    if (diff * diff > subtract * subtract && !l.inTransition) {
+      diff = Math.abs(subtract);
+      closestLift = l.id;
+    }
+    console.log(liftData);
+  });
+
+  return closestLift;
 };
