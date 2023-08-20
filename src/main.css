@@ -42,38 +42,6 @@ h1 {
   position: relative;
   flex-wrap: nowrap;
 }
-.lifts-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  box-sizing: border-box;
-  flex-wrap: nowrap;
-  padding: 4px;
-}
-
-.lift {
-  width: 60px;
-  display: flex;
-  overflow: hidden;
-  color: FFFFFF;
-  background-color: #b6d867;
-  position: relative;
-}
-
-.liftLeftDoor,
-.liftRightDoor {
-  background-color: #c1e66d;
-  width: 30px;
-  height: 96px;
-  position: absolute;
-  top: 0;
-  transition: width 2.5s ease;
-  /* transition: width 0.5s ease; */
-}
-
-.liftLeftDoor {
-  border-right: 3px solid rgb(43, 42, 42);
-}
 
 #simulation {
   display: flex;
@@ -104,4 +72,41 @@ h1 {
   row-gap: 2px;
   justify-content: center;
   justify-items: center;
+}
+.lifts-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  padding: 4px;
+}
+
+.lift {
+  width: 4.3rem;
+  height: 5.5rem;
+  display: flex;
+  overflow: hidden;
+  color: FFFFFF;
+  background-color: #b6d867;
+  position: relative;
+  transform: translateY(0); /* Initial position */
+  transition: transform 0.25s linear; /* Transition property for movement */
+
+  /* transform: translate(50%); */
+}
+
+.liftLeftDoor,
+.liftRightDoor {
+  background-color: #c1e66d;
+  width: 30px;
+  height: 96px;
+  position: absolute;
+  top: 0;
+  transition: width 2.5s ease;
+  /* transition: width 0.5s ease; */
+}
+
+.liftLeftDoor {
+  border-right: 3px solid rgb(43, 42, 42);
 }

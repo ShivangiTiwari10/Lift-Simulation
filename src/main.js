@@ -1,12 +1,12 @@
-let liftData = [];
-let requestQueue = [];
-
 const form = document.querySelector("#form");
 const simulation = document.querySelector("#simulation");
 const submitButton = form.querySelector(".submitButton");
 
+let liftData = []; // An array to store information about each lift current state
+let requestQueue = []; //An array to store floor requests
+
 submitButton.addEventListener("click", function (event) {
-  event.preventDefault();
+  event.preventDefault(); // on submitButton clicked generateUi
 
   const numLifts = parseInt(document.querySelector("#liftnumber").value);
   const numFloors = parseInt(document.querySelector("#floornumber").value);
@@ -17,6 +17,7 @@ submitButton.addEventListener("click", function (event) {
   }
 });
 
+// Checks whether the input values for lifts and floors are valid
 function validateInput(numFloors, numLifts) {
   if (isNaN(numFloors) || isNaN(numLifts)) {
     alert("Enter a valid number");
@@ -37,6 +38,7 @@ function validateInput(numFloors, numLifts) {
   return true;
 }
 
+//  clears the simulation area and validates the input again.
 function generateSimulationUI(numFloors, numLifts) {
   const groundFloor = document.getElementById("simulation");
   groundFloor.innerHTML = "";
@@ -50,6 +52,7 @@ function generateSimulationUI(numFloors, numLifts) {
 }
 
 const createFloor = (numFloors, numLifts) => {
+  // generate lifts and floor
   const floors = document.getElementById("simulation");
   for (id = 1; id <= numFloors; id++) {
     let floorIdx = floors.childElementCount;
@@ -151,12 +154,14 @@ const moveButtonClick = (floorNumber) => {
     requestQueue.push(floorNumber);
     console.log("Lift not found, added to requestQueue:", requestQueue);
     return;
+  } else {
+    liftData.forEach((l) => {
+      if (l.id == liftId) {
+        console.log("Lift  found");
+        l.inTransition = true;
+      }
+    });
   }
-  liftData.forEach((l) => {
-    if (l.id == liftId) {
-      l.inTransition = true;
-    }
-  });
   console.log("Moving lift to floor:", floorNumber);
   movelift(lift, floorNumber);
 };
@@ -167,7 +172,7 @@ const movelift = (lift, floorNumber) => {
   liftData.forEach((l) => {
     if (l.id == lift.id) {
       diff = Math.abs(l.floor - floorNumber);
-      time = diff * 2000;
+      time = diff * 25000;
     }
 
     console.log("move lifts from floor", l.floor, "to", floorNumber);
@@ -177,11 +182,12 @@ const movelift = (lift, floorNumber) => {
 
   lift.style.transition = "transform " + time + "ms linear";
   lift.style.transform = "translateY(-" + (floorNumber - 1) * 116 + "px)";
-  openLift(lift, time);
-  closeLift(lift, floorNumber, time);
+  openLift(lift, time * 0.4);
+  closeLift(lift, floorNumber, time * 0.8);
 };
 
 const calculateLiftMovement = (floorNumber) => {
+  // finds the closest available lift to a requested floor.
   liftId = findClosestLift(floorNumber);
   return "lift-" + liftId;
 };
@@ -199,4 +205,26 @@ const findClosestLift = (floorNumber) => {
   });
 
   return closestLift;
+};
+
+// Simulates the opening of the lift doors
+const openLift = (lift, delay) => {
+  const leftDoor = lift.querySelector(".liftLeftDoor");
+  const rightDoor = lift.querySelector(".liftRightDoor");
+
+  setTimeout(() => {
+    leftDoor.style.width = "0"; // Open left door
+    rightDoor.style.width = "0"; // Open right door
+  }, delay);
+};
+
+// Simulates the closing of the lift doors
+const closeLift = (lift, floorNumber, delay) => {
+  const leftDoor = lift.querySelector(".liftLeftDoor");
+  const rightDoor = lift.querySelector(".liftRightDoor");
+
+  setTimeout(() => {
+    leftDoor.style.width = "30px"; // Close left door
+    rightDoor.style.width = "30px"; // Close right door
+  }, delay);
 };
