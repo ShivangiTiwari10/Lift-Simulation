@@ -1,17 +1,19 @@
+let liftData = []; // An array to store information about each lift current state
+let requestQueue = []; //An array to store floor requests
+
 const form = document.querySelector("#form");
 const simulation = document.querySelector("#simulation");
 const submitButton = form.querySelector(".submitButton");
 
-let liftData = []; // An array to store information about each lift current state
-let requestQueue = []; //An array to store floor requests
-
 submitButton.addEventListener("click", function (event) {
   event.preventDefault(); // on submitButton clicked generateUi
 
-  const numLifts = parseInt(document.querySelector("#liftnumber").value);
-  const numFloors = parseInt(document.querySelector("#floornumber").value);
+  const numLifts = parseInt(document.querySelector("#liftNumber").value);
+  const numFloors = parseInt(document.querySelector("#floorNumber").value);
 
   if (validateInput(numFloors, numLifts)) {
+    console.log("validateInput", validateInput);
+    // console.log("GeneratingUi", generateSimulationUI);
     generateSimulationUI(numFloors, numLifts);
     document.getElementById("backButton").removeAttribute("hidden");
   }
@@ -65,6 +67,14 @@ const createFloor = (numFloors, numLifts) => {
       for (let liftId = 1; liftId <= numLifts; liftId++) {
         const lift = createLiftBox(liftId);
         floor.querySelector(".lifts-container").appendChild(lift);
+
+        // Initialize lift data and push to liftData array
+        const initialLiftData = {
+          id: "lift-" + liftId,
+          floor: 1, // Set the initial floor here (e.g., 1)
+          inTransition: false,
+        };
+        liftData.push(initialLiftData);
       }
       floors.setAttribute("class", "floors-border");
     }
@@ -101,7 +111,7 @@ const creatFloorBox = (id) => {
   downButton.setAttribute("type", "button");
   downButton.setAttribute("value", "▼");
   downButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
-  console.log(downButton.moveButtonClick);
+  console.log("moveButtonClick", moveButtonClick);
   console.log("downButton clicked");
 
   floorButtons.append(upButton);
@@ -130,6 +140,8 @@ const createLiftBox = (liftId) => {
   lift.appendChild(leftDoor);
   lift.appendChild(rightDoor);
 
+  console.log("Lift", lift);
+
   return lift;
 };
 
@@ -137,6 +149,8 @@ window.backButtonClick = () => {
   const floors = document.getElementById("simulation");
   floors.removeAttribute("class");
   floors.innerHTML = "";
+
+  console.log("backButtonClick", backButtonClick);
   document.getElementById("backButton").setAttribute("hidden", "hidden");
   document.getElementById("form").removeAttribute("hidden");
 };
@@ -145,6 +159,7 @@ const moveButtonClick = (floorNumber) => {
   console.log("Btn clicked for floor:", floorNumber);
 
   const liftId = calculateLiftMovement(floorNumber);
+
   console.log("Selected liftId:", liftId);
 
   console.log("liftData:", liftData);
@@ -156,7 +171,7 @@ const moveButtonClick = (floorNumber) => {
     return;
   } else {
     liftData.forEach((l) => {
-      if (l.id == liftId) {
+      if (l.id === liftId) {
         console.log("Lift  found");
         l.inTransition = true;
       }
@@ -165,6 +180,10 @@ const moveButtonClick = (floorNumber) => {
   console.log("Moving lift to floor:", floorNumber);
   movelift(lift, floorNumber);
 };
+const calculateLiftMovement = (floorNumber) => {
+  // finds the closest available lift to a requested floor.
+  return findClosestLift(floorNumber);
+};
 
 const movelift = (lift, floorNumber) => {
   let time = 0;
@@ -172,24 +191,17 @@ const movelift = (lift, floorNumber) => {
   liftData.forEach((l) => {
     if (l.id == lift.id) {
       diff = Math.abs(l.floor - floorNumber);
-      time = diff * 25000;
-    }
+      time = diff * 1000;
 
-    console.log("move lifts from floor", l.floor, "to", floorNumber);
-    console.log("Time:", time);
-    console.log("move lifts ", floorNumber);
+      // Update lift's current floor in liftData
+      l.floor = floorNumber;
+
+      console.log("move lifts from floor", l.floor, "to", floorNumber);
+    }
   });
 
   lift.style.transition = "transform " + time + "ms linear";
   lift.style.transform = "translateY(-" + (floorNumber - 1) * 116 + "px)";
-  openLift(lift, time * 0.4);
-  closeLift(lift, floorNumber, time * 0.8);
-};
-
-const calculateLiftMovement = (floorNumber) => {
-  // finds the closest available lift to a requested floor.
-  liftId = findClosestLift(floorNumber);
-  return "lift-" + liftId;
 };
 
 const findClosestLift = (floorNumber) => {
@@ -201,9 +213,8 @@ const findClosestLift = (floorNumber) => {
       diff = Math.abs(subtract);
       closestLift = l.id;
     }
-    console.log(liftData);
   });
-
+  console.log("Closest lift:", closestLift);
   return closestLift;
 };
 
@@ -219,7 +230,7 @@ const openLift = (lift, delay) => {
 };
 
 // Simulates the closing of the lift doors
-const closeLift = (lift, floorNumber, delay) => {
+const closeLift = (lift, delay) => {
   const leftDoor = lift.querySelector(".liftLeftDoor");
   const rightDoor = lift.querySelector(".liftRightDoor");
 
