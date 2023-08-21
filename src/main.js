@@ -191,7 +191,7 @@ const movelift = (lift, floorNumber) => {
   liftData.forEach((l) => {
     if (l.id == lift.id) {
       diff = Math.abs(l.floor - floorNumber);
-      time = diff * 1000;
+      time = diff * 2000;
 
       // Update lift's current floor in liftData
       l.floor = floorNumber;
@@ -202,6 +202,37 @@ const movelift = (lift, floorNumber) => {
 
   lift.style.transition = "transform " + time + "ms linear";
   lift.style.transform = "translateY(-" + (floorNumber - 1) * 116 + "px)";
+  // Open doors after 2.5 seconds
+  setTimeout(() => {
+    openLift(lift, 0);
+  }, 2500);
+
+  // Close doors after 5 seconds (2.5s for opening + 2.5s for closing)
+  setTimeout(() => {
+    closeLift(lift, 0);
+  }, 5000);
+
+  // After the lift movement is complete, check the request queue
+  setTimeout(() => {
+    liftData.forEach((l) => {
+      if (l.id == lift.id) {
+        l.inTransition = false;
+      }
+    });
+    console.log("Lift reached floor:", floorNumber);
+    processRequestQueue();
+  }, time + 5000); // Add 5000ms for door operations
+};
+const processRequestQueue = () => {
+  if (requestQueue.length > 0) {
+    const nextFloor = requestQueue.shift(); // Get the next floor request
+    const liftId = calculateLiftMovement(nextFloor);
+    const lift = document.getElementById(liftId);
+    if (lift) {
+      console.log("Moving lift to floor (from request queue):", nextFloor);
+      movelift(lift, nextFloor);
+    }
+  }
 };
 
 const findClosestLift = (floorNumber) => {
