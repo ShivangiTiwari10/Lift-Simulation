@@ -32,7 +32,7 @@ h1 {
 }
 
 .floor {
-  background-color: rgb(185, 180, 180);
+  background-color: rgb(214, 212, 212);
   width: 900px;
   height: 100px;
   display: flex;
@@ -83,12 +83,12 @@ h1 {
 }
 
 .lift {
-  width: 4.3rem;
+  width: 60px;
   height: 5.5rem;
   display: flex;
   overflow: hidden;
   color: FFFFFF;
-  background-color: #b6d867;
+  background-color: #ffffff;
   position: relative;
   transform: translateY(0); /* Initial position */
   transition: transform 0.25s linear; /* Transition property for movement */
@@ -98,7 +98,7 @@ h1 {
 
 .liftLeftDoor,
 .liftRightDoor {
-  background-color: #da4f94;
+  background-color: #685a60;
   width: 30px;
   height: 96px;
   position: absolute;
@@ -109,4 +109,8 @@ h1 {
 
 .liftLeftDoor {
   border-right: 3px solid rgb(43, 42, 42);
+}
+.liftRightDoor {
+  border-left: 3px solid rgb(43, 42, 42);
+  right: 0;
 }
