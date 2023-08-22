@@ -93,7 +93,7 @@ const creatFloorBox = (id) => {
   liftsContainer.setAttribute("id", "lifts-container-" + id);
 
   const floorName = document.createElement("div");
-  floorName.innerHTML = "Floor " + id;
+  floorName.innerHTML = "Floor" + id;
 
   const floorButtons = document.createElement("div");
   floorButtons.setAttribute("class", "floorButtons");
@@ -202,15 +202,6 @@ const movelift = (lift, floorNumber) => {
 
   lift.style.transition = "transform " + time + "ms linear";
   lift.style.transform = "translateY(-" + (floorNumber - 1) * 116 + "px)";
-  // Open doors after 2.5 seconds
-  setTimeout(() => {
-    openLift(lift, 0);
-  }, 2500);
-
-  // Close doors after 5 seconds (2.5s for opening + 2.5s for closing)
-  setTimeout(() => {
-    closeLift(lift, 0);
-  }, 5000);
 
   // After the lift movement is complete, check the request queue
   setTimeout(() => {
@@ -220,8 +211,8 @@ const movelift = (lift, floorNumber) => {
       }
     });
     console.log("Lift reached floor:", floorNumber);
-    processRequestQueue();
-  }, time + 5000); // Add 5000ms for door operations
+    openAndCloseLiftDoors(lift, floorNumber);
+  }, time);
 };
 const processRequestQueue = () => {
   if (requestQueue.length > 0) {
@@ -250,23 +241,23 @@ const findClosestLift = (floorNumber) => {
 };
 
 // Simulates the opening of the lift doors
-const openLift = (lift, delay) => {
+const openAndCloseLiftDoors = (lift, floorNumber) => {
   const leftDoor = lift.querySelector(".liftLeftDoor");
   const rightDoor = lift.querySelector(".liftRightDoor");
 
-  setTimeout(() => {
-    leftDoor.style.width = "0"; // Open left door
-    rightDoor.style.width = "0"; // Open right door
-  }, delay);
-};
-
-// Simulates the closing of the lift doors
-const closeLift = (lift, delay) => {
-  const leftDoor = lift.querySelector(".liftLeftDoor");
-  const rightDoor = lift.querySelector(".liftRightDoor");
+  leftDoor.style.width = "0"; // Open left door
+  rightDoor.style.width = "0"; // Open right door
 
   setTimeout(() => {
     leftDoor.style.width = "30px"; // Close left door
     rightDoor.style.width = "30px"; // Close right door
-  }, delay);
+
+    liftData.forEach((l) => {
+      if (l.id == lift.id) {
+        l.inTransition = false;
+      }
+    });
+    console.log("Lift doors closed:", floorNumber);
+    processRequestQueue();
+  }, 2500); // Open doors for 2.5 seconds
 };
