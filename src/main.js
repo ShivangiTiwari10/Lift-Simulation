@@ -56,6 +56,11 @@ function generateSimulationUI(numFloors, numLifts) {
 const createFloor = (numFloors, numLifts) => {
   // generate lifts and floor
   const floors = document.getElementById("simulation");
+  floors.innerHTML = "";
+
+  const floorsContainerHeight = numFloors * 120 + "px"; // Adjust the value as needed
+  floors.style.height = floorsContainerHeight;
+
   for (id = 1; id <= numFloors; id++) {
     let floorIdx = floors.childElementCount;
     let currentFloor = floorIdx + 1;
@@ -102,17 +107,17 @@ const creatFloorBox = (id) => {
   upButton.setAttribute("type", "button");
   upButton.setAttribute("value", "▲");
   upButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
-  console.log("upButton clicked");
+  console.log("upButton clicked", upButton);
 
   console.log(upButton.moveButtonClick);
-  console.log(upButton);
 
   const downButton = document.createElement("input");
   downButton.setAttribute("type", "button");
   downButton.setAttribute("value", "▼");
   downButton.setAttribute("onclick", "moveButtonClick(" + id + ")");
+  console.log("downButton clicked", downButton);
+
   console.log("moveButtonClick", moveButtonClick);
-  console.log("downButton clicked");
 
   floorButtons.append(upButton);
   floorButtons.append(downButton);

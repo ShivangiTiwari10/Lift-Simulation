@@ -6,7 +6,7 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -33,7 +33,7 @@ h1 {
 
 .floor {
   background-color: rgb(214, 212, 212);
-  width: 900px;
+  width: 96%;
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -43,19 +43,61 @@ h1 {
   flex-wrap: nowrap;
 }
 
+.lifts-container {
+  width: 96%;
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  padding: 4px;
+}
+
+.lift {
+  width: 60px;
+  display: flex;
+  overflow: hidden;
+  color: FFFFFF;
+  background-color: #ffffff;
+  position: relative;
+  transform: translateY(0); /* Initial position */
+  transition: transform 0.25s ease; /* Transition property for movement */
+
+  /* transform: translate(50%); */
+  z-index: 1; /* Ensure lift is below the container */
+}
+
+.liftLeftDoor,
+.liftRightDoor {
+  background-color: #685a60;
+  width: 30px;
+  height: 96px;
+  position: absolute;
+  top: 0;
+  transition: width 2.5s linear;
+  /* transition: width 0.5s ease; */
+}
+
+.liftLeftDoor {
+  border-right: 3px solid rgb(43, 42, 42);
+}
+.liftRightDoor {
+  border-left: 3px solid rgb(43, 42, 42);
+  right: 0;
+}
+
 #simulation {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  row-gap: 12px;
+  row-gap: 16px;
   align-items: center;
 }
 
 .floors-border {
-  margin-top: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border: 1px #0aa34a;
+  margin-top: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: 1px solid gray;
 }
 
 .floorDetails {
@@ -71,46 +113,5 @@ h1 {
   flex-direction: column;
   row-gap: 2px;
   justify-content: center;
-  justify-items: center;
-}
-.lifts-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  box-sizing: border-box;
-  flex-wrap: nowrap;
-  padding: 4px;
-}
-
-.lift {
-  width: 60px;
-  height: 5.5rem;
-  display: flex;
-  overflow: hidden;
-  color: FFFFFF;
-  background-color: #ffffff;
-  position: relative;
-  transform: translateY(0); /* Initial position */
-  transition: transform 0.25s linear; /* Transition property for movement */
-
-  /* transform: translate(50%); */
-}
-
-.liftLeftDoor,
-.liftRightDoor {
-  background-color: #685a60;
-  width: 30px;
-  height: 96px;
-  position: absolute;
-  top: 0;
-  transition: width 2.5s ease;
-  /* transition: width 0.5s ease; */
-}
-
-.liftLeftDoor {
-  border-right: 3px solid rgb(43, 42, 42);
-}
-.liftRightDoor {
-  border-left: 3px solid rgb(43, 42, 42);
-  right: 0;
+  justify-items: top;
 }
