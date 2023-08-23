@@ -95,9 +95,23 @@ h1 {
 
 .floors-border {
   margin-top: 10px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border: 1px solid gray;
+}
+.backButton {
+  position: absolute;
+  top: 10px; /* Adjust this value for vertical positioning */
+  left: 10px; /* Adjust this value for horizontal positioning */
+  padding: 8px 12px;
+  background-color: #4e1b1b;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #6d2828;
 }
 
 .floorDetails {
