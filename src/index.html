@@ -12,10 +12,15 @@
       <form>
         <h1>Lift Simulation</h1>
         <label for="liftNumber">Enter number of lifts</label><br />
-        <input type="number" id="liftNumber" name="lifts" /><br /><br />
+        <input type="number" min="0" id="liftNumber" name="lifts" /><br /><br />
 
         <label for="floorNumber">Enter number of floors</label><br />
-        <input type="number" id="floorNumber" name="floors" /><br /><br />
+        <input
+          type="number"
+          min="0"
+          id="floorNumber"
+          name="floors"
+        /><br /><br />
 
         <button class="submitButton">submit</button>
       </form>

@@ -276,7 +276,7 @@ const openAndCloseLiftDoors = (lift, floorNumber) => {
     liftData.forEach((l) => {
       if (l.id == lift.id) {
         l.inTransition = false;
-        console.log("move lift which door is compleately closed");
+        console.log("move lift if its door is compleately closed");
       }
     });
   }, 5000);
