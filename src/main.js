@@ -58,8 +58,8 @@ const createFloor = (numFloors, numLifts) => {
   const floors = document.getElementById("simulation");
   floors.innerHTML = "";
 
-  const floorsContainerHeight = numFloors * 120 + "px"; // Adjust the value as needed
-  floors.style.height = floorsContainerHeight;
+  // const floorsContainerHeight = numFloors * 120 + "px"; // Adjust the value as needed
+  // floors.style.height = floorsContainerHeight;
 
   for (id = 1; id <= numFloors; id++) {
     let floorIdx = floors.childElementCount;
@@ -178,10 +178,10 @@ const moveButtonClick = (floorNumber) => {
     const isInTransition = liftData.some(
       (l) => l.id === liftId && l.inTransition
     );
-    const isDoorOpen =
-      lift.querySelector(".liftLeftDoor").style.width === "0px"; // Check if the door is open
-    if (isInTransition || isDoorOpen) {
-      console.log("$isInTransition");
+    // const isDoorOpen =
+    //   lift.querySelector(".liftLeftDoor").style.width === "0px"; // Check if the door is open
+    if (isInTransition) {
+      console.log("$isInTransition", isInTransition);
       console.log("Lift is already in motion. Ignoring new request.");
     } else {
       liftData.forEach((l) => {
@@ -221,11 +221,6 @@ const movelift = (lift, floorNumber) => {
 
   // After the lift movement is complete, check the request queue
   setTimeout(() => {
-    liftData.forEach((l) => {
-      if (l.id == lift.id) {
-        l.inTransition = false;
-      }
-    });
     console.log("Lift reached floor:", floorNumber);
     openAndCloseLiftDoors(lift, floorNumber);
   }, time);
@@ -247,8 +242,11 @@ const findClosestIdleLift = (floorNumber) => {
   let closestLift;
   liftData.forEach((l) => {
     if (!l.inTransition) {
+      const isDoorOpen =
+        document.getElementById(l.id).querySelector(".liftLeftDoor").style
+          .width === "0px"; // Check if the door is open
       let subtract = floorNumber - l.floor;
-      if (diff * diff > subtract * subtract) {
+      if (!isDoorOpen && diff * diff > subtract * subtract) {
         diff = Math.abs(subtract);
         closestLift = l.id;
       }
@@ -273,4 +271,13 @@ const openAndCloseLiftDoors = (lift, floorNumber) => {
     console.log("Lift doors closed:", floorNumber);
     processRequestQueue();
   }, 2500); // Open doors for 2.5 seconds
+
+  setTimeout(() => {
+    liftData.forEach((l) => {
+      if (l.id == lift.id) {
+        l.inTransition = false;
+        console.log("move lift which door is compleately closed");
+      }
+    });
+  }, 5000);
 };
